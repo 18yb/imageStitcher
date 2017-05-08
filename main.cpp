@@ -8,6 +8,15 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/calib3d/calib3d.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
+
+
+
+#include <roberts.h>
+#include <sobel.h>
+#include <laplacian.h>
+#include <laplaciangaussian.h>
+
+
 #define THRESHOLD 400
 using namespace cv;
 using namespace std;
@@ -192,14 +201,29 @@ int main(int argc, char *argv[])
     {  return -1; }
 
     // Load the images
-    Mat image1= imread( argv[2] );
-    Mat image2= imread( argv[1] );
+    /*Mat image1= imread("p1.jpg", 1 );
+    Mat image2= imread("p2.jpg", 1 );
     Mat gray_image1;
     Mat gray_image2;
-
-    // Convert to Grayscale
     cvtColor( image1, gray_image1, CV_RGB2GRAY );
-    cvtColor( image2, gray_image2, CV_RGB2GRAY );
+    cvtColor( image2, gray_image2, CV_RGB2GRAY );*/
+
+    Mat img1 = imread("p1.jpg", 1 );
+    Mat img2 = imread("p2.jpg", 1 );
+
+
+    roberts *method_11 = new roberts(img1);
+    sobel *method_12 = new sobel(img1);
+    laplacian *method_13 = new laplacian(img1);
+    laplaciangaussian *method_14 = new laplaciangaussian(img1);
+
+    roberts *method_21 = new roberts(img2);
+    sobel *method_22 = new sobel(img2);
+    laplacian *method_23 = new laplacian(img2);
+    laplaciangaussian *method_24 = new laplaciangaussian(img2);
+
+    Mat image1 = method_13->img;
+    Mat image2 = method_23->img;
 
     Mat vectorCompare = startComparingRows(image1,image2);
 
