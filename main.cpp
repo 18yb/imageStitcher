@@ -208,9 +208,11 @@ int main(int argc, char *argv[])
     cvtColor( image1, gray_image1, CV_RGB2GRAY );
     cvtColor( image2, gray_image2, CV_RGB2GRAY );*/
 
-    Mat img1 = imread("p1.jpg", 1 );
-    Mat img2 = imread("p2.jpg", 1 );
+    Mat img1 = imread("1.jpg", 1 );
+    Mat img2 = imread("2.jpg", 1 );
 
+
+    clock_t begin = clock();
 
     roberts *method_11 = new roberts(img1);
     sobel *method_12 = new sobel(img1);
@@ -222,8 +224,11 @@ int main(int argc, char *argv[])
     laplacian *method_23 = new laplacian(img2);
     laplaciangaussian *method_24 = new laplaciangaussian(img2);
 
+
     Mat image1 = method_13->img;
     Mat image2 = method_23->img;
+
+    imshow("temp", image1);
 
     Mat vectorCompare = startComparingRows(image1,image2);
 
