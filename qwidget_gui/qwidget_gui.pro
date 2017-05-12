@@ -24,8 +24,32 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    laplacian.cpp \
+    laplaciangaussian.cpp \
+    roberts.cpp \
+    sobel.cpp \
+    stitcher.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    laplacian.h \
+    laplaciangaussian.h \
+    roberts.h \
+    sobel.h \
+    stitcher.h
 
 FORMS    += mainwindow.ui
+
+INCLUDEPATH += /usr/local/include/opencv2
+LIBS += -L/usr/local/lib
+LIBS += -lopencv_core
+LIBS += -lopencv_imgproc
+LIBS += -lopencv_highgui
+LIBS += -lopencv_ml
+LIBS += -lopencv_video
+LIBS += -lopencv_features2d
+LIBS += -lopencv_calib3d
+LIBS += -lopencv_objdetect
+LIBS += -lopencv_flann
+LIBS += -lopencv_imgcodecs
+LIBS += -lopencv_xfeatures2d

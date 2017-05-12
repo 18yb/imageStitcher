@@ -6,7 +6,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->lineEdit->setValidator(new QIntValidator(0,255,this));
+    ui->lineEdit->setValidator(new QIntValidator(0,800,this));
+
+    ui->lineEdit->setText(QString::number(400));
+    ui->horizontalSlider->setValue(400);
+    threshold = 400;
+
+    stitcher = new Stitcher(threshold);
+
 }
 
 MainWindow::~MainWindow()
@@ -17,14 +24,80 @@ MainWindow::~MainWindow()
 void MainWindow::on_horizontalSlider_valueChanged(int value)
 {
     ui->lineEdit->setText(QString::number(value));
+    threshold=value;
 }
 
 void MainWindow::on_lineEdit_textChanged(const QString &arg1)
 {
     ui->horizontalSlider->setValue(arg1.toInt());
+    threshold = arg1.toInt();
 }
 
-void MainWindow::on_pushButton_clicked()
-{
+void MainWindow::on_pushButton_clicked(){
 
+    if(ui->radioButton->isChecked()){
+        roberts *r1= new roberts(refImage1);
+        roberts *r2 = new roberts(refImage2);
+
+        Mat image1 = r1->img;
+        Mat image2 = r2->img;
+
+        vectorCompare = stitcher->startComparingRows(image1,image2, refImage1, refImage2);
+
+    }
+    if(ui->radioButton_2->isChecked()){
+        sobel *s1 = new sobel(refImage1);
+        sobel *s2 = new sobel(refImage2);
+
+        Mat image1 = s1->img;
+        Mat image2 = s2->img;
+
+        vectorCompare = stitcher->startComparingRows(image1,image2, refImage1, refImage2);
+    }
+    if(ui->radioButton_3->isChecked()){
+        laplacian *l1 = new laplacian(refImage1);
+        laplacian *l2 = new laplacian(refImage2);
+
+        Mat image1 = l1->img;
+        Mat image2 = l2->img;
+
+        vectorCompare = stitcher->startComparingRows(image1,image2, refImage1, refImage2);
+    }
+    if(ui->radioButton_4->isChecked()){
+        laplaciangaussian *log1 = new laplaciangaussian(refImage1);
+        laplaciangaussian *log2 = new laplaciangaussian(refImage2);
+
+        Mat image1 = log1->img;
+        Mat image2 = log2->img;
+
+        vectorCompare = stitcher->startComparingRows(image1,image2, refImage1, refImage2);
+    }
+    if(ui->radioButton_5->isChecked()){
+        Mat gray_image1;
+        Mat gray_image2;
+
+        cvtColor( refImage1, gray_image1, CV_RGB2GRAY );
+        cvtColor( refImage1, gray_image2, CV_RGB2GRAY );
+
+        vectorCompare = stitcher->startComparingRows(gray_image1,gray_image2, refImage1, refImage2);
+    }
+
+    imwrite("output.jpg", vectorCompare);
+
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    QDir directory;
+    directory.setPath(QDir::currentPath());
+
+    QStringList images = directory.entryList(QStringList() << "*.jpg" << "*.JPG",QDir::Files);
+    foreach(QString filename, images) {
+        qDebug()<<filename;
+        resources.push_back(imread(filename.toStdString(),1));
+    }
+
+    refImage1 = resources[0];
+    refImage2 = resources[1];
 }
