@@ -37,15 +37,15 @@ Mat Stitcher::reverseComparison(Mat image1, Mat image2, Mat refImage1, Mat refIm
     Mat descriptors_object = computeKeypoints(image1, keypoints_object);
     Mat descriptors_scene = computeKeypoints(image2, keypoints_scene);
 
-    qDebug()<<"Keypoints object: "<<keypoints_object.size();
-    qDebug()<<"Keybpoints scene: "<<keypoints_scene.size();
+    //qDebug()<<"Keypoints object: "<<keypoints_object.size();
+    //qDebug()<<"Keybpoints scene: "<<keypoints_scene.size();
 
     //-- Step 3: Matching descriptor vectors using FLANN matcher
     FlannBasedMatcher matcher;
     std::vector< DMatch > matches;
     matcher.match( descriptors_object, descriptors_scene, matches );
 
-    qDebug()<< "Matches: "<<matches.size();
+    //qDebug()<< "Matches: "<<matches.size();
     double max_dist = 0; double min_dist = 100;
 
     //-- Quick calculation of max and min distances between keypoints
@@ -55,8 +55,8 @@ Mat Stitcher::reverseComparison(Mat image1, Mat image2, Mat refImage1, Mat refIm
         if( dist > max_dist ) max_dist = dist;
     }
 
-    printf("-- Max dist : %f \n", max_dist );
-    printf("-- Min dist : %f \n", min_dist );
+    //printf("-- Max dist : %f \n", max_dist );
+    //printf("-- Min dist : %f \n", min_dist );
 
     //-- Use only "good" matches (i.e. whose distance is less than 3*min_dist )
     vector< DMatch > good_matches;
@@ -66,7 +66,7 @@ Mat Stitcher::reverseComparison(Mat image1, Mat image2, Mat refImage1, Mat refIm
         { good_matches.push_back( matches[i]); }
     }
 
-    qDebug()<<"Good matches: "<<good_matches.size();
+    //qDebug()<<"Good matches: "<<good_matches.size();
 
     vector< Point2f > obj;
     vector< Point2f > scene;
@@ -119,8 +119,8 @@ Mat Stitcher::startComparingRows(Mat image1, Mat image2, Mat refImage1, Mat refI
         if( dist > max_dist ) max_dist = dist;
     }
 
-    printf("-- Max dist : %f \n", max_dist );
-    printf("-- Min dist : %f \n", min_dist );
+    //printf("-- Max dist : %f \n", max_dist );
+    //printf("-- Min dist : %f \n", min_dist );
 
     //-- Use only "good" matches (i.e. whose distance is less than 3*min_dist )
     vector< DMatch > good_matches;
@@ -149,7 +149,7 @@ Mat Stitcher::startComparingRows(Mat image1, Mat image2, Mat refImage1, Mat refI
 
     //qDebug()<<H.at<double>(0,2);
     //qDebug()<<H.at<double>(1,2);
-    qDebug()<<"";
+    //qDebug()<<"";
     // Use the Homography Matrix to warp the images
     cv::Mat result;
     Mat H2 ;
@@ -159,12 +159,12 @@ Mat Stitcher::startComparingRows(Mat image1, Mat image2, Mat refImage1, Mat refI
             warpPerspective(refImage1,result,H,cv::Size(refImage1.cols+int(H.at<double>(0,2)),refImage1.rows));
             cv::Mat half(result,cv::Rect(0,0,refImage2.cols,refImage2.rows));
             refImage2.copyTo(half);
-
+            /*
             qDebug()<<"Keypoints object: "<<keypoints_object.size();
             qDebug()<<"Keybpoints scene: "<<keypoints_scene.size();
             qDebug()<< "Matches: "<<matches.size();
             qDebug()<<"Good matches: "<<good_matches.size();
-
+            */
         }
         else{
             H2 = reverseComparison(image2, image1,refImage1,refImage2);
@@ -178,12 +178,12 @@ Mat Stitcher::startComparingRows(Mat image1, Mat image2, Mat refImage1, Mat refI
             warpPerspective(refImage1,result,H,cv::Size(refImage1.cols,refImage1.rows+int(H.at<double>(1,2))));
             cv::Mat half(result,cv::Rect(0,0,refImage2.cols,refImage2.rows));
             refImage2.copyTo(half);
-
+            /*
             qDebug()<<"Keypoints object: "<<keypoints_object.size();
             qDebug()<<"Keybpoints scene: "<<keypoints_scene.size();
             qDebug()<< "Matches: "<<matches.size();
             qDebug()<<"Good matches: "<<good_matches.size();
-
+            */
         }
         else{
             H2 = reverseComparison(image2, image1, refImage1, refImage2);

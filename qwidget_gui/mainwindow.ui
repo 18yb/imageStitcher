@@ -15,6 +15,9 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QRadioButton" name="radioButton">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -25,6 +28,9 @@
     </property>
     <property name="text">
      <string>Roberts</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QRadioButton" name="radioButton_2">
@@ -112,9 +118,9 @@
     <property name="geometry">
      <rect>
       <x>330</x>
-      <y>80</y>
+      <y>100</y>
       <width>91</width>
-      <height>91</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -138,9 +144,9 @@
     <property name="geometry">
      <rect>
       <x>200</x>
-      <y>80</y>
-      <width>89</width>
-      <height>91</height>
+      <y>100</y>
+      <width>101</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">

@@ -37,6 +37,7 @@ private:
     int threshold;
     QDir path;
 
+
 };
 
 #endif // MAINWINDOW_H

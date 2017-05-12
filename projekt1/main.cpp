@@ -210,7 +210,7 @@ Mat startComparingRows(Mat image1, Mat image2, Mat refImage1, Mat refImage2){
     }
 
 
-    imshow( "Result", result );
+
 
     return result;
 }
@@ -231,8 +231,8 @@ int main(int argc, char *argv[])
     cvtColor( image2, gray_image2, CV_RGB2GRAY );
 
     */
-    Mat img1 = imread("p12.jpg", 1 );
-    Mat img2 = imread("p11.jpg", 1 );
+    Mat img1 = imread("kan2.jpg", 1 );
+    Mat img2 = imread("kan3blued.jpg", 1 );
 
     // -------------------------
     clock_t begin = clock();
@@ -278,7 +278,8 @@ int main(int argc, char *argv[])
     laplaciangaussian *method_24 = new laplaciangaussian(img2);
     image1 = method_14->img;
     image2 = method_24->img;
-    vectorCompare = startComparingRows(image1,image2, img1, img2);
+    Mat vectorCompare1 = startComparingRows(image1,image2, img1, img2);
+    imshow( "Result1", vectorCompare1 );
     clock_t end3 = clock();
     elapsed_secs = double(end3 - begin3) / CLOCKS_PER_SEC;
     qDebug()<<"Elapsed time: "<<elapsed_secs;
