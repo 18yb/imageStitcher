@@ -13,7 +13,6 @@ Mat Stitcher::translateImage(Mat &img, Mat dst_size, int offset_x, int offset_y)
 
     return trans_mat;
 }
-
 vector<KeyPoint> Stitcher::detectKeypoints(Mat image){
     Ptr<SURF> detector = SURF::create(threshold_value);
     vector< KeyPoint > keypoints;
@@ -118,7 +117,6 @@ Mat Stitcher::startComparingRows(Mat image1, Mat image2, Mat refImage1, Mat refI
         if( dist < min_dist ) min_dist = dist;
         if( dist > max_dist ) max_dist = dist;
     }
-
     //printf("-- Max dist : %f \n", max_dist );
     //printf("-- Min dist : %f \n", min_dist );
 
