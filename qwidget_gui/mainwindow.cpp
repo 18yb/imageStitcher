@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     threshold = 400;
 
     stitcher = new Stitcher(threshold);
-
+    counter =0;
 }
 
 MainWindow::~MainWindow()
@@ -36,7 +36,8 @@ void MainWindow::on_lineEdit_textChanged(const QString &arg1)
 
 void MainWindow::on_pushButton_clicked(){
 
-    QStringList images = path.entryList(QStringList() << "*.jpg" << "*.JPG",QDir::Files);
+    counter++;
+    QStringList images = path.entryList(QStringList() << "*.jpg" << "*.JPG"<< "*.png"<< "*.PNG",QDir::Files);
     foreach(QString filename, images) {
         resources.push_back(imread((path.absolutePath()+"/"+filename).toStdString(),1));
         //qDebug()<<filename;
@@ -98,13 +99,13 @@ void MainWindow::on_pushButton_clicked(){
             vectorCompare = stitcher->startComparingRows(gray_image1,gray_image2, refImage1, refImage2);
         }
     }
-
-    imwrite("output.jpg", vectorCompare);
+    QString writePath = path.absolutePath();
+    imwrite(writePath.toStdString()+"/output"+to_string(counter)+".png", vectorCompare);
 
     QMessageBox::information(
         this,
         tr("File generated"),
-        tr("File has been saved to: ")+QDir::currentPath() );
+        tr("File has been saved to: ")+path.absolutePath());
 
 }
 

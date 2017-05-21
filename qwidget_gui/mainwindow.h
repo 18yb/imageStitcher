@@ -36,6 +36,7 @@ private:
     QVector<Mat> resources;
     int threshold;
     QDir path;
+    int counter;
 
 
 };

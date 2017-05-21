@@ -33,6 +33,7 @@ public:
     Mat computeKeypoints(Mat image, vector<KeyPoint> keypoints);
     Mat reverseComparison(Mat image1, Mat image2, Mat refImage1, Mat refImage2);
     Mat startComparingRows(Mat image1, Mat image2, Mat refImage1, Mat refImage2);
+    Mat alpha(Mat img);
 
 
     Mat getFinalMat();
