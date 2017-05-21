@@ -1,13 +1,13 @@
-#include "stitcher.h"
+#include "surf.h"
 
-Stitcher::Stitcher(int arg1)
+surf::surf(int arg1)
 {
     threshold_value = arg1;
 
 
 }
 
-Mat Stitcher::alpha(Mat img){
+Mat surf::alpha(Mat img){
     Mat image_bgra;
 
     cvtColor(img, image_bgra, CV_BGR2BGRA);
@@ -25,27 +25,27 @@ Mat Stitcher::alpha(Mat img){
     return image_bgra;
 }
 
-Mat Stitcher::translateImage(Mat &img, Mat dst_size, int offset_x, int offset_y){
+Mat surf::translateImage(Mat &img, Mat dst_size, int offset_x, int offset_y){
     Mat trans_mat = (Mat_<double>(2,3) << 1,0, offset_x, 0, 1, offset_y);
     warpAffine(img, img, trans_mat, dst_size.size());
 
     return trans_mat;
 }
-vector<KeyPoint> Stitcher::detectKeypoints(Mat image){
+vector<KeyPoint> surf::detectKeypoints(Mat image){
     Ptr<SURF> detector = SURF::create(threshold_value);
     vector< KeyPoint > keypoints;
     detector->detect(image, keypoints);
     return keypoints;
 }
 
-Mat Stitcher::computeKeypoints(Mat image, vector<KeyPoint> keypoints){
+Mat surf::computeKeypoints(Mat image, vector<KeyPoint> keypoints){
     Ptr<SURF> detector = SURF::create(threshold_value);
     Mat descriptors;
     detector->compute(image, keypoints, descriptors);
     return descriptors;
 }
 
-Mat Stitcher::reverseComparison(Mat image1, Mat image2, Mat refImage1, Mat refImage2){
+Mat surf::reverseComparison(Mat image1, Mat image2, Mat refImage1, Mat refImage2){
     //-- Step 1: Detect the keypoints using SURF Detector
     vector< KeyPoint > keypoints_object = detectKeypoints(image1);
     vector< KeyPoint > keypoints_scene = detectKeypoints(image2);
@@ -135,7 +135,7 @@ void overlayImage(Mat* src, Mat* overlay, const Point& location)
         }
     }
 }
-Mat Stitcher::startComparingRows(Mat image1, Mat image2, Mat refImage1, Mat refImage2){
+Mat surf::startComparingRows(Mat image1, Mat image2, Mat refImage1, Mat refImage2){
 
 
 

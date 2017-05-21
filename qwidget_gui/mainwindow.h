@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QDir>
-#include <stitcher.h>
+#include <surf.h>
 #include <QFileDialog>
 #include <QTreeView>
 #include <QVector>
@@ -29,7 +29,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    Stitcher *stitcher;
+    surf *surf_method;
     Mat vectorCompare;
     Mat refImage1;
     Mat refImage2;

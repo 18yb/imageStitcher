@@ -29,16 +29,16 @@ SOURCES += main.cpp\
     laplaciangaussian.cpp \
     roberts.cpp \
     sobel.cpp \
-    stitcher.cpp \
-    hog.cpp
+    hog.cpp \
+    surf.cpp
 
 HEADERS  += mainwindow.h \
     laplacian.h \
     laplaciangaussian.h \
     roberts.h \
     sobel.h \
-    stitcher.h \
-    hog.h
+    hog.h \
+    surf.h
 
 FORMS    += mainwindow.ui
 

@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->horizontalSlider->setValue(400);
     threshold = 400;
 
-    stitcher = new Stitcher(threshold);
+    surf_method = new surf(threshold);
     counter =0;
 }
 
@@ -59,7 +59,7 @@ void MainWindow::on_pushButton_clicked(){
             Mat image1 = r1->img;
             Mat image2 = r2->img;
 
-            vectorCompare = stitcher->startComparingRows(image1,image2, refImage1, refImage2);
+            vectorCompare = surf_method->startComparingRows(image1,image2, refImage1, refImage2);
 
         }
         if(ui->radioButton_2->isChecked()){
@@ -69,7 +69,7 @@ void MainWindow::on_pushButton_clicked(){
             Mat image1 = s1->img;
             Mat image2 = s2->img;
 
-            vectorCompare = stitcher->startComparingRows(image1,image2, refImage1, refImage2);
+            vectorCompare = surf_method->startComparingRows(image1,image2, refImage1, refImage2);
         }
         if(ui->radioButton_3->isChecked()){
             laplacian *l1 = new laplacian(refImage1);
@@ -78,7 +78,7 @@ void MainWindow::on_pushButton_clicked(){
             Mat image1 = l1->img;
             Mat image2 = l2->img;
 
-            vectorCompare = stitcher->startComparingRows(image1,image2, refImage1, refImage2);
+            vectorCompare = surf_method->startComparingRows(image1,image2, refImage1, refImage2);
         }
         if(ui->radioButton_4->isChecked()){
             laplaciangaussian *log1 = new laplaciangaussian(refImage1);
@@ -87,7 +87,7 @@ void MainWindow::on_pushButton_clicked(){
             Mat image1 = log1->img;
             Mat image2 = log2->img;
 
-            vectorCompare = stitcher->startComparingRows(image1,image2, refImage1, refImage2);
+            vectorCompare = surf_method->startComparingRows(image1,image2, refImage1, refImage2);
         }
         if(ui->radioButton_5->isChecked()){
             Mat gray_image1;
@@ -96,7 +96,7 @@ void MainWindow::on_pushButton_clicked(){
             cvtColor( refImage1, gray_image1, CV_RGB2GRAY );
             cvtColor( refImage1, gray_image2, CV_RGB2GRAY );
 
-            vectorCompare = stitcher->startComparingRows(gray_image1,gray_image2, refImage1, refImage2);
+            vectorCompare = surf_method->startComparingRows(gray_image1,gray_image2, refImage1, refImage2);
         }
     }
     QString writePath = path.absolutePath();

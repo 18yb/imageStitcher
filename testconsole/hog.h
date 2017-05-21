@@ -22,8 +22,7 @@ using namespace cv;
 class hog
 {
 public:
-    hog();
-
+    hog(Mat img);
 };
 
 #endif // HOG_H

@@ -1,5 +1,5 @@
-#ifndef STITCHER_H
-#define STITCHER_H
+#ifndef SURF_H
+#define SURF_H
 
 #include <stdio.h>
 #include <iostream>
@@ -10,7 +10,6 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/calib3d/calib3d.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
-
 #include <QDir>
 
 
@@ -23,11 +22,10 @@ using namespace cv;
 using namespace std;
 using namespace cv::xfeatures2d;
 
-
-class Stitcher
+class surf
 {
 public:
-    Stitcher(int arg);
+    surf(int arg);
     Mat translateImage(Mat &img, Mat dst_size, int offset_x, int offset_y);
     vector<KeyPoint> detectKeypoints(Mat image);
     Mat computeKeypoints(Mat image, vector<KeyPoint> keypoints);
@@ -35,12 +33,12 @@ public:
     Mat startComparingRows(Mat image1, Mat image2, Mat refImage1, Mat refImage2);
     Mat alpha(Mat img);
 
-
     Mat getFinalMat();
 
 private:
     Mat output;
     int threshold_value;
+
 };
 
-#endif // STITCHER_H
+#endif // SURF_H
