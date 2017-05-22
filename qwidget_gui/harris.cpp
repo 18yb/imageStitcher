@@ -1,13 +1,15 @@
-#include "surf.h"
+#include "harris.h"
+#define HARRIS SURF
+#include <QDebug>
 
-surf::surf(int arg1)
+harris::harris(int arg1)
 {
     threshold_value = arg1;
 
 
 }
 
-Mat surf::alpha(Mat img){
+Mat harris::alpha(Mat img){
     Mat image_bgra;
 
     cvtColor(img, image_bgra, CV_BGR2BGRA);
@@ -25,27 +27,27 @@ Mat surf::alpha(Mat img){
     return image_bgra;
 }
 
-Mat surf::translateImage(Mat &img, Mat dst_size, int offset_x, int offset_y){
+Mat harris::translateImage(Mat &img, Mat dst_size, int offset_x, int offset_y){
     Mat trans_mat = (Mat_<double>(2,3) << 1,0, offset_x, 0, 1, offset_y);
     warpAffine(img, img, trans_mat, dst_size.size());
 
     return trans_mat;
 }
-vector<KeyPoint> surf::detectKeypoints(Mat image){
-    Ptr<SURF> detector = SURF::create(threshold_value);
+vector<KeyPoint> harris::detectKeypoints(Mat image){
+    Ptr<FeatureDetector> harris_detect = GFTTDetector::create(1000,0.01,10,3,true);
     vector< KeyPoint > keypoints;
-    detector->detect(image, keypoints);
+    harris_detect->detect(image, keypoints);
     return keypoints;
 }
 
-Mat surf::computeKeypoints(Mat image, vector<KeyPoint> keypoints){
-    Ptr<SURF> detector = SURF::create(threshold_value);
+Mat harris::computeKeypoints(Mat image, vector<KeyPoint> keypoints){
+    Ptr<HARRIS> detector = HARRIS::create(400);
     Mat descriptors;
     detector->compute(image, keypoints, descriptors);
     return descriptors;
 }
 
-Mat surf::reverseComparison(Mat image1, Mat image2, Mat refImage1, Mat refImage2){
+Mat harris::reverseComparison(Mat image1, Mat image2, Mat refImage1, Mat refImage2){
     //-- Step 1: Detect the keypoints using SURF Detector
     vector< KeyPoint > keypoints_object = detectKeypoints(image1);
     vector< KeyPoint > keypoints_scene = detectKeypoints(image2);
@@ -54,15 +56,15 @@ Mat surf::reverseComparison(Mat image1, Mat image2, Mat refImage1, Mat refImage2
     Mat descriptors_object = computeKeypoints(image1, keypoints_object);
     Mat descriptors_scene = computeKeypoints(image2, keypoints_scene);
 
-    //qDebug()<<"Keypoints object: "<<keypoints_object.size();
-    //qDebug()<<"Keybpoints scene: "<<keypoints_scene.size();
+    qDebug()<<"Keypoints object: "<<keypoints_object.size();
+    qDebug()<<"Keybpoints scene: "<<keypoints_scene.size();
 
     //-- Step 3: Matching descriptor vectors using FLANN matcher
     FlannBasedMatcher matcher;
     std::vector< DMatch > matches;
     matcher.match( descriptors_object, descriptors_scene, matches );
 
-    //qDebug()<< "Matches: "<<matches.size();
+    qDebug()<< "Matches: "<<matches.size();
     double max_dist = 0; double min_dist = 100;
 
     //-- Quick calculation of max and min distances between keypoints
@@ -83,7 +85,7 @@ Mat surf::reverseComparison(Mat image1, Mat image2, Mat refImage1, Mat refImage2
         { good_matches.push_back( matches[i]); }
     }
 
-    //qDebug()<<"Good matches: "<<good_matches.size();
+    qDebug()<<"Good matches: "<<good_matches.size();
 
     vector< Point2f > obj;
     vector< Point2f > scene;
@@ -108,7 +110,7 @@ Mat surf::reverseComparison(Mat image1, Mat image2, Mat refImage1, Mat refImage2
     return H;
 }
 
-void surf::overlayImage(Mat* src, Mat* overlay, const Point& location)
+void harris::overlayImage(Mat* src, Mat* overlay, const Point& location)
 {
     for (int y = max(location.y, 0); y < src->rows; ++y)
     {
@@ -135,9 +137,7 @@ void surf::overlayImage(Mat* src, Mat* overlay, const Point& location)
         }
     }
 }
-Mat surf::startComparingRows(Mat image1, Mat image2, Mat refImage1, Mat refImage2){
-
-
+Mat harris::startComparingRows(Mat image1, Mat image2, Mat refImage1, Mat refImage2){
 
     //qDebug() << threshold_value;
     //-- Step 1: Detect the keypoints using SURF Detector
@@ -161,7 +161,7 @@ Mat surf::startComparingRows(Mat image1, Mat image2, Mat refImage1, Mat refImage
     std::vector< DMatch > matches;
     matcher.match( descriptors_object, descriptors_scene, matches );
 
-    qDebug()<<"Matches"<<matches.size();
+    //qDebug()<<"Matches"<<matches.size();
     double max_dist = 0; double min_dist = 100;
 
     //-- Quick calculation of max and min distances between keypoints

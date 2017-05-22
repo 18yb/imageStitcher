@@ -30,7 +30,9 @@ SOURCES += main.cpp\
     roberts.cpp \
     sobel.cpp \
     hog.cpp \
-    surf.cpp
+    surf.cpp \
+    sift.cpp \
+    harris.cpp
 
 HEADERS  += mainwindow.h \
     laplacian.h \
@@ -38,7 +40,9 @@ HEADERS  += mainwindow.h \
     roberts.h \
     sobel.h \
     hog.h \
-    surf.h
+    surf.h \
+    sift.h \
+    harris.h
 
 FORMS    += mainwindow.ui
 

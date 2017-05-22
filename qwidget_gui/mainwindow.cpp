@@ -14,6 +14,10 @@ MainWindow::MainWindow(QWidget *parent) :
     threshold = 400;
 
     surf_method = new surf(threshold);
+    sift_method = new sift(threshold);
+    hog_method = new hog(threshold);
+    harris_method = new harris(threshold);
+
     counter =0;
 }
 
@@ -59,8 +63,9 @@ void MainWindow::on_pushButton_clicked(){
             Mat image1 = r1->img;
             Mat image2 = r2->img;
 
-            vectorCompare = surf_method->startComparingRows(image1,image2, refImage1, refImage2);
-
+            //vectorCompare = surf_method->startComparingRows(image1,image2, refImage1, refImage2);
+            //vectorCompare = sift_method->startComparingRows(image1,image2, refImage1, refImage2);
+            vectorCompare = harris_method->startComparingRows(image1,image2, refImage1, refImage2);
         }
         if(ui->radioButton_2->isChecked()){
             sobel *s1 = new sobel(refImage1);

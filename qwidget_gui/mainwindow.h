@@ -3,10 +3,15 @@
 
 #include <QMainWindow>
 #include <QDir>
-#include <surf.h>
 #include <QFileDialog>
 #include <QTreeView>
 #include <QVector>
+
+#include <surf.h>
+#include <sift.h>
+#include <hog.h>
+#include <harris.h>
+
 
 namespace Ui {
 class MainWindow;
@@ -30,6 +35,10 @@ private slots:
 private:
     Ui::MainWindow *ui;
     surf *surf_method;
+    sift *sift_method;
+    hog *hog_method;
+    harris *harris_method;
+
     Mat vectorCompare;
     Mat refImage1;
     Mat refImage2;

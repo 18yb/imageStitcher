@@ -1,31 +1,26 @@
-#ifndef SURF_H
-#define SURF_H
+#ifndef HARRIS_H
+#define HARRIS_H
 
-#include <stdio.h>
-#include <iostream>
-#include <QDebug>
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/core/core.hpp"
 #include "opencv2/features2d/features2d.hpp"
 #include "opencv2/xfeatures2d.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/calib3d/calib3d.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
-#include <QDir>
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 
-
-#include <roberts.h>
-#include <sobel.h>
-#include <laplacian.h>
-#include <laplaciangaussian.h>
-
-using namespace cv;
 using namespace std;
 using namespace cv::xfeatures2d;
+using namespace cv;
 
-class surf
+class harris
 {
 public:
-    surf(int arg);
+    harris(int arg);
     Mat translateImage(Mat &img, Mat dst_size, int offset_x, int offset_y);
     vector<KeyPoint> detectKeypoints(Mat image);
     Mat computeKeypoints(Mat image, vector<KeyPoint> keypoints);
@@ -38,9 +33,12 @@ public:
     Mat getFinalMat();
 
 private:
+    int thresh = 200;
+    int max_thresh = 255;
+    Mat src, src_gray;
     Mat output;
     int threshold_value;
 
 };
 
-#endif // SURF_H
+#endif // HARRIS_H

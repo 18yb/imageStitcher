@@ -1,31 +1,27 @@
-#ifndef SURF_H
-#define SURF_H
+#ifndef SIFT_H
+#define SIFT_H
 
-#include <stdio.h>
-#include <iostream>
-#include <QDebug>
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/core/core.hpp"
 #include "opencv2/features2d/features2d.hpp"
 #include "opencv2/xfeatures2d.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/calib3d/calib3d.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
-#include <QDir>
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 
-
-#include <roberts.h>
-#include <sobel.h>
-#include <laplacian.h>
-#include <laplaciangaussian.h>
-
-using namespace cv;
 using namespace std;
 using namespace cv::xfeatures2d;
+using namespace cv;
 
-class surf
+class sift
 {
 public:
-    surf(int arg);
+    sift(int arg);
     Mat translateImage(Mat &img, Mat dst_size, int offset_x, int offset_y);
     vector<KeyPoint> detectKeypoints(Mat image);
     Mat computeKeypoints(Mat image, vector<KeyPoint> keypoints);
@@ -43,4 +39,4 @@ private:
 
 };
 
-#endif // SURF_H
+#endif // SIFT_H
