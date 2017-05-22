@@ -149,8 +149,8 @@ Mat surf::startComparingRows(Mat image1, Mat image2, Mat refImage1, Mat refImage
     Mat out2;
     drawKeypoints(image1, keypoints_scene, out2);
 
-    //qDebug()<<"Keypints 1:" << keypoints_object.size();
-    //qDebug()<<"Keypints 2:" << keypoints_scene.size();
+    qDebug()<<"Keypints 1:" << keypoints_object.size();
+    qDebug()<<"Keypints 2:" << keypoints_scene.size();
 
     //-- Step 2: Calculate descriptors (feature vectors)
     Mat descriptors_object = computeKeypoints(image1, keypoints_object);

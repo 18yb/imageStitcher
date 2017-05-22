@@ -137,7 +137,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>empty</string>
+     <string>No edges</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
@@ -152,6 +152,36 @@
     <property name="text">
      <string>File</string>
     </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>10</y>
+      <width>86</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>SURF</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>SIFT</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>HOG</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>HARRIS</string>
+     </property>
+    </item>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

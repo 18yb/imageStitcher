@@ -40,6 +40,7 @@ void MainWindow::on_lineEdit_textChanged(const QString &arg1)
 
 void MainWindow::on_pushButton_clicked(){
 
+
     counter++;
     QStringList images = path.entryList(QStringList() << "*.jpg" << "*.JPG"<< "*.png"<< "*.PNG",QDir::Files);
     foreach(QString filename, images) {
@@ -63,9 +64,20 @@ void MainWindow::on_pushButton_clicked(){
             Mat image1 = r1->img;
             Mat image2 = r2->img;
 
-            //vectorCompare = surf_method->startComparingRows(image1,image2, refImage1, refImage2);
-            //vectorCompare = sift_method->startComparingRows(image1,image2, refImage1, refImage2);
-            vectorCompare = harris_method->startComparingRows(image1,image2, refImage1, refImage2);
+            switch(ui->comboBox->currentIndex()){
+            case 0:
+                vectorCompare = surf_method->startComparingRows(image1,image2, refImage1, refImage2);
+                break;
+            case 1:
+                vectorCompare = sift_method->startComparingRows(image1,image2, refImage1, refImage2);
+                break;
+            case 2:
+                vectorCompare = hog_method->startComparingRows(image1,image2, refImage1, refImage2);
+                break;
+            case 3:
+                vectorCompare = harris_method->startComparingRows(image1,image2, refImage1, refImage2);
+                break;
+            }
         }
         if(ui->radioButton_2->isChecked()){
             sobel *s1 = new sobel(refImage1);
@@ -74,7 +86,21 @@ void MainWindow::on_pushButton_clicked(){
             Mat image1 = s1->img;
             Mat image2 = s2->img;
 
-            vectorCompare = surf_method->startComparingRows(image1,image2, refImage1, refImage2);
+            switch(ui->comboBox->currentIndex()){
+            case 0:
+                vectorCompare = surf_method->startComparingRows(image1,image2, refImage1, refImage2);
+                break;
+            case 1:
+                vectorCompare = sift_method->startComparingRows(image1,image2, refImage1, refImage2);
+                break;
+            case 2:
+                vectorCompare = hog_method->startComparingRows(image1,image2, refImage1, refImage2);
+                break;
+            case 3:
+                vectorCompare = harris_method->startComparingRows(image1,image2, refImage1, refImage2);
+                break;
+            }
+
         }
         if(ui->radioButton_3->isChecked()){
             laplacian *l1 = new laplacian(refImage1);
@@ -83,7 +109,21 @@ void MainWindow::on_pushButton_clicked(){
             Mat image1 = l1->img;
             Mat image2 = l2->img;
 
-            vectorCompare = surf_method->startComparingRows(image1,image2, refImage1, refImage2);
+
+            switch(ui->comboBox->currentIndex()){
+            case 0:
+                vectorCompare = surf_method->startComparingRows(image1,image2, refImage1, refImage2);
+                break;
+            case 1:
+                vectorCompare = sift_method->startComparingRows(image1,image2, refImage1, refImage2);
+                break;
+            case 2:
+                vectorCompare = hog_method->startComparingRows(image1,image2, refImage1, refImage2);
+                break;
+            case 3:
+                vectorCompare = harris_method->startComparingRows(image1,image2, refImage1, refImage2);
+                break;
+            }
         }
         if(ui->radioButton_4->isChecked()){
             laplaciangaussian *log1 = new laplaciangaussian(refImage1);
@@ -92,20 +132,48 @@ void MainWindow::on_pushButton_clicked(){
             Mat image1 = log1->img;
             Mat image2 = log2->img;
 
-            vectorCompare = surf_method->startComparingRows(image1,image2, refImage1, refImage2);
+            switch(ui->comboBox->currentIndex()){
+            case 0:
+                vectorCompare = surf_method->startComparingRows(image1,image2, refImage1, refImage2);
+                break;
+            case 1:
+                vectorCompare = sift_method->startComparingRows(image1,image2, refImage1, refImage2);
+                break;
+            case 2:
+                vectorCompare = hog_method->startComparingRows(image1,image2, refImage1, refImage2);
+                break;
+            case 3:
+                vectorCompare = harris_method->startComparingRows(image1,image2, refImage1, refImage2);
+                break;
+            }
+
         }
         if(ui->radioButton_5->isChecked()){
             Mat gray_image1;
             Mat gray_image2;
 
             cvtColor( refImage1, gray_image1, CV_RGB2GRAY );
-            cvtColor( refImage1, gray_image2, CV_RGB2GRAY );
+            cvtColor( refImage2, gray_image2, CV_RGB2GRAY );
 
-            vectorCompare = surf_method->startComparingRows(gray_image1,gray_image2, refImage1, refImage2);
+            switch(ui->comboBox->currentIndex()){
+            case 0:
+                vectorCompare = surf_method->startComparingRows(gray_image1,gray_image2, refImage1, refImage2);
+                break;
+            case 1:
+                vectorCompare = sift_method->startComparingRows(gray_image1,gray_image2, refImage1, refImage2);
+                break;
+            case 2:
+                vectorCompare = hog_method->startComparingRows(gray_image1,gray_image2, refImage1, refImage2);
+                break;
+            case 3:
+                vectorCompare = harris_method->startComparingRows(gray_image1,gray_image2, refImage1, refImage2);
+                break;
+            }
+
         }
     }
     QString writePath = path.absolutePath();
-    imwrite(writePath.toStdString()+"/output"+to_string(counter)+".png", vectorCompare);
+    //imwrite(writePath.toStdString()+"/output"+to_string(counter)+".png", vectorCompare);
 
     QMessageBox::information(
         this,
